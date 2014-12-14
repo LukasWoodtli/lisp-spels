@@ -51,4 +51,22 @@
 
 ;(message (is-at 'whiskey-bottle 'living-room object-locations))
 
-;; http://www.lisperati.com/casting-spels-emacs/html/casting-spels-emacs-19.html
+
+(defun describe-floor (loc objs obj-loc)
+  (apply #'append (mapcar (lambda (x)
+                            `(you see a ,x on the floor -))
+                          (remove-if-not (lambda (x)
+                                           (is-at x loc obj-loc))
+                                         objs))))
+
+;(message (describe-floor 'living-room objects object-locations))
+
+
+(defun look ()
+  (append (describe-location location map)
+          (describe-paths location map)
+          (describe-floor location objects object-locations)))
+
+(message (look))
+
+;; http://www.lisperati.com/casting-spels-emacs/html/casting-spels-emacs-21.html
